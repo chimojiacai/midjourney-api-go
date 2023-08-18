@@ -8,7 +8,7 @@ package discord_api
 import (
 	"fmt"
 	"github.com/imroc/req"
-	"midjourney_api/common"
+	"midjourney_api/internal/common"
 	"net/http"
 	"regexp"
 	"strings"

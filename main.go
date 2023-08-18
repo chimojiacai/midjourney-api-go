@@ -6,34 +6,21 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"log"
-	discordapi "midjourney_api/discord-api"
+	"midjourney_api/internal/conf"
+	"midjourney_api/internal/http/router"
 )
 
-var c discordapi.Config
-
-func init() {
-	config, err := discordapi.ParseConfig()
-	if err != nil {
-		log.Fatal("解析配置文件失败：", err)
-	}
-	c = config
-}
-
 func main() {
-	// 请求生成图
-	err := c.SenderReq("cat")
-	if err != nil {
-		log.Fatal(err)
-	}
+	// 加载配置文件
+	conf.NewConfig() // 加载配置文件，找不到会panic
 
-	// 异步拉取聊天记录，读取历史生成的图片
-	data, err := c.MidJourneyMsg()
-	if err != nil {
-		log.Fatal(err)
-	}
-	marshal, _ := json.Marshal(data)
-	fmt.Println(string(marshal))
+	r := gin.New()
+	router.Router(r) // 初始化路由
+
+	s := conf.InitServer(fmt.Sprintf(":%d", conf.Conf.HttpPort), r) // 启动服务+优雅关闭
+	log.Println(fmt.Sprintf("server run success：0.0.0.0:%d", +conf.Conf.HttpPort))
+	log.Fatalf(s.ListenAndServe().Error())
 }

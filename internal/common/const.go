@@ -11,3 +11,12 @@ const (
 	ChannelMsgUrl = "https://discord.com/api/v9/channels/%s/messages?limit=100" // 拉取群里的聊天记录 url, 每次读取100条
 	MjUsername    = "Midjourney Bot"
 )
+
+const (
+	TaskActionIMAGINE   = "IMAGINE"   // 生成图片
+	TaskActionUPSCALE   = "UPSCALE"   // 选中放大
+	TaskActionVARIATION = "VARIATION" // 选中其中的一张图，生成四张相似的
+	TaskActionREROLL    = "REROLL"    // 重新执行
+	TaskActionDESCRIBE  = "DESCRIBE"  // 图转prompt
+	TaskActionBLEND     = "BLEND"     // 多图混合
+)

@@ -8,19 +8,20 @@ package discord_api
 import (
 	"fmt"
 	"github.com/imroc/req"
-	"midjourney_api/common"
+	"midjourney_api/internal/common"
+	"midjourney_api/internal/conf"
 	"midjourney_api/utils"
 	"net/http"
 	"time"
 )
 
 // SenderReq 开始画图
-func (c Config) SenderReq(prompt string) error {
+func SenderReq(prompt string) error {
 	header := req.Header{
-		"authorization": c.Authorization,
+		"authorization": conf.Conf.Authorization,
 	}
 
-	p, err := c.senderParams(prompt)
+	p, err := senderParams(prompt)
 	if err != nil {
 		return err
 	}
@@ -37,7 +38,8 @@ func (c Config) SenderReq(prompt string) error {
 }
 
 // 拼接请求参数
-func (c Config) senderParams(prompt string) (*SenderParams, error) {
+func senderParams(prompt string) (*SenderParams, error) {
+	c := conf.Conf
 	// 生成nonce值
 	node, err := utils.NewNode(1)
 	if err != nil {
