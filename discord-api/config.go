@@ -28,6 +28,7 @@ func ParseConfig() (Config, error) {
 	if err != nil {             // Handle errors reading the config file
 		return c, err
 	}
+	viper.WatchConfig()
 	err = viper.Unmarshal(&c)
 	if err != nil {
 		return c, err

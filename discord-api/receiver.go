@@ -44,7 +44,6 @@ func (c Config) MidJourneyMsg() ([]*Attachments, error) {
 		} else {
 			fmt.Println("test no attachments")
 		}
-
 	}
 	return resList, nil
 }
